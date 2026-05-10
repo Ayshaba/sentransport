@@ -9,6 +9,7 @@ import DetailLigne from './DetailLigne';
 function App() {
   const [recherche, setRecherche] = useState("");
   const [ligneSelectionnee, setLigneSelectionnee] = useState(null);
+  const [nbRecherches, setNbRecherches] = useState(0); // compteur de recherches
 
   const lignes = [
     {
@@ -95,12 +96,25 @@ function App() {
       setLigneSelectionnee(ligne); // premier clic = sélectionner
     }
   }
+  // Fonction pour mettre à jour la recherche ET incrémenter le compteur
+  function handleRecherche(valeur) {
+    setRecherche(valeur);
+    setNbRecherches(prev => prev + 1);
+  }
 
   return (
     <div className="App">
       <Header />
+      <p className="info-recherche">
+        Vous avez effectué {nbRecherches} recherche{nbRecherches > 1 ? 's' : ''}
+      </p>
       <main className="contenu">
-        <Recherche valeur={recherche} onChange={setRecherche} />
+        <div className="zone-recherche">
+          <Recherche valeur={recherche} onChange={handleRecherche} />
+          <button onClick={() => setRecherche("")} className="btn-effacer">
+            Effacer
+          </button>
+        </div>
 
         <p className="resultat-recherche">
           {lignesFiltrees.length} ligne
@@ -108,20 +122,25 @@ function App() {
           {lignesFiltrees.length > 1 ? 's' : ''}
         </p>
 
-        {lignesFiltrees.map(ligne => (
-          <LigneBus
-            key={ligne.id}
-            numero={ligne.numero}
-            depart={ligne.depart}
-            arrivee={ligne.arrivee}
-            arrets={ligne.arrets}
-            estSelectionnee={ligneSelectionnee && ligneSelectionnee.id === ligne.id}
-            onClick={() => handleClickLigne(ligne)}
-          />
-        ))}
+        {lignesFiltrees.length === 0 ? (
+          <p className="aucune-ligne">Aucune ligne trouvée</p>
+        ) : (
+          lignesFiltrees.map(ligne => (
+            <LigneBus
+              key={ligne.id}
+              numero={ligne.numero}
+              depart={ligne.depart}
+              arrivee={ligne.arrivee}
+              arrets={ligne.arrets}
+              estSelectionnee={ligneSelectionnee && ligneSelectionnee.id === ligne.id}
+              onClick={() => handleClickLigne(ligne)}
+            />
+          ))
+        )}
 
         {ligneSelectionnee && <DetailLigne ligne={ligneSelectionnee} />}
       </main>
+
       <Footer />
     </div>
   );
