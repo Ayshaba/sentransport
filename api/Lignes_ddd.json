@@ -92,5 +92,32 @@
             "HLM",
             "Sandaga"
         ]
+    },
+    {
+        "id": 7,
+        "numero": "30",
+        "depart": "Dieuppeul",
+        "arrivee": "HLM Grand Yoff",
+        "arrets": 9,
+        "listeArrets": [
+            "Dieuppeul",
+            "Sicap Baobab",
+            "HLM",
+            "Grand Yoff"
+        ]
+    },
+    {
+        "id": 8,
+        "numero": "45",
+        "depart": "Fann",
+        "arrivee": "Liberté 6",
+        "arrets": 13,
+        "listeArrets": [
+            "Fann",
+            "Université Cheikh Anta Diop",
+            "Point E",
+            "Liberté 5",
+            "Liberté 6"
+        ]
     }
 ]
